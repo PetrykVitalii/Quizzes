@@ -1,15 +1,25 @@
 export enum LOCALS {
-  TOKEN = 'token',
+  AccessToken = 'access_token',
+  RefreshToken = 'refresh_token',
 }
 
 export default class LocalStorage {
-  static getToken() {
-    const token = window.localStorage.getItem(LOCALS.TOKEN);
+  static getAccessToken() {
+    const token = window.localStorage.getItem(LOCALS.AccessToken);
     return token;
   }
 
-  static setToken(token: string) {
-    window.localStorage.setItem(LOCALS.TOKEN, token);
+  static setAccessToken(token: string) {
+    window.localStorage.setItem(LOCALS.AccessToken, token);
+  }
+
+  static getRefreshToken() {
+    const token = window.localStorage.getItem(LOCALS.RefreshToken);
+    return token;
+  }
+
+  static setRefreshToken(token: string) {
+    window.localStorage.setItem(LOCALS.RefreshToken, token);
   }
 
   static clearByKey(key: LOCALS) {

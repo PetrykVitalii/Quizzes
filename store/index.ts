@@ -8,10 +8,14 @@ import MainProtected from '@/api/main-protected';
 import S3Api from '@/api/s3';
 
 import { LanguageActions } from '@/store/actions/language';
+import { AuthActions } from '@/store/actions/auth';
+
 import languageReducer from '@/store/reducers/language';
+import authReducer from '@/store/reducers/auth';
 
 const rootReducer = combineReducers({
   languageReducer,
+  authReducer,
 });
 
 const composeEnhancers = (typeof window === 'undefined' || !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ? compose : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
@@ -34,9 +38,12 @@ const enhancer = composeEnhancers(
 
 export type State = ReturnType<typeof rootReducer>;
 export type Actions =
+  | AuthActions
   | LanguageActions;
 
 export const store = createStore(rootReducer, enhancer);
+
+export type AppDispatch = typeof store.dispatch;
 
 export default store;
 

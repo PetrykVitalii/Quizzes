@@ -20,20 +20,69 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: ${({ theme }) => theme.colors.Main};
   }
 
   button {
-    border-width: 0;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    line-height: normal;
+
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    -webkit-appearance: none;
+    ::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
   }
 
-  input[type="number"] {
-  -webkit-appearance: textfield;
-     -moz-appearance: textfield;
-          appearance: textfield;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
   }
-  input[type=number]::-webkit-inner-spin-button, 
-  input[type=number]::-webkit-outer-spin-button { 
+
+  pre {
+    margin: 0;
+    padding: 0;
+  }
+
+  input, textarea {
     -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  input {
+    :disabled {
+      background-color: inherit;
+    }
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type=number] {
+    -moz-appearance: textfield;
   }
 `;
 

@@ -4,9 +4,16 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
 import store from '@/store';
+
 import { GlobalStyle, theme } from '@/styles/global';
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => (
+import ProtectRoute from '@/components/common/ProtectRoute';
+
+interface PageProps {
+  protected: boolean;
+}
+
+const MyApp: React.FC<AppProps<PageProps>> = ({ Component, pageProps }) => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <GlobalStyle />
@@ -15,7 +22,11 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => (
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>New Project</title>
       </Head>
-      <Component {...pageProps} />
+      {pageProps.protected ? (
+        <ProtectRoute>
+          <Component {...pageProps} />
+        </ProtectRoute>
+      ) : <Component {...pageProps} />}
     </ThemeProvider>
   </Provider>
 );

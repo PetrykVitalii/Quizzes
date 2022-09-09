@@ -1,5 +1,5 @@
 export enum LANGUAGES {
-  EN = 'en',
+  EN = 'EN',
 }
 
 export interface LanguageState {

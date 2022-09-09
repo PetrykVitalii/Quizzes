@@ -1,0 +1,43 @@
+import {
+  createStore, applyMiddleware, compose, combineReducers,
+} from 'redux';
+import thunk from 'redux-thunk';
+
+import MainApi from '@/api/main';
+import MainProtected from '@/api/main-protected';
+import S3Api from '@/api/s3';
+
+import { LanguageActions } from '@/store/actions/language';
+import languageReducer from '@/store/reducers/language';
+
+const rootReducer = combineReducers({
+  languageReducer,
+});
+
+const composeEnhancers = (typeof window === 'undefined' || !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ? compose : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+
+const mainApi = new MainApi();
+const mainProtectedApi = new MainProtected();
+const s3Api = new S3Api();
+
+export const getApiArguments = () => ({
+  mainApi,
+  mainProtectedApi,
+  s3Api,
+});
+
+const enhancer = composeEnhancers(
+  applyMiddleware(
+    thunk.withExtraArgument(getApiArguments()),
+  ),
+);
+
+export type State = ReturnType<typeof rootReducer>;
+export type Actions =
+  | LanguageActions;
+
+export const store = createStore(rootReducer, enhancer);
+
+export default store;
+
+export const getStore = () => store;

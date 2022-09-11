@@ -24,7 +24,9 @@ export const getQuizzes = (): AsyncAction => async (
     dispatch(quizzesActions.setQuizzes(quizes));
 
     dispatch(quizzesActions.setQuizzesState(RequestState.LOADED));
-  } catch (e) {
-    dispatch(quizzesActions.setQuizzesState(RequestState.ERROR));
+  } catch (e: any) {
+    if (e.response.data.message === 'Unauthorized') {
+      dispatch(quizzesActions.setQuizzesState(RequestState.ERROR));
+    }
   }
 };

@@ -6,9 +6,9 @@ import { AppDispatch } from '@/store';
 import { RequestState } from '@/store/reducers/common';
 import { getQuizzes } from '@/store/actions/quizzes';
 import { selectQuizzesState } from '@/store/selectors/quizzes';
-import { logOut } from '@/store/actions/auth';
 
 import LoadingContainer from '@/components/common/LoadingContainer';
+import { logOut } from '@/store/actions/auth';
 
 interface Props {
   children: React.ReactNode
@@ -16,6 +16,7 @@ interface Props {
 
 const ProtectRoute: React.FC<Props> = ({ children }) => {
   const quizzesLoadingState = useSelector(selectQuizzesState);
+
   const router = useRouter();
 
   const dispatch = useDispatch<AppDispatch>();

@@ -8,8 +8,7 @@ const Profile: React.FC<Props> = () => {
 
   return (
     <ProfileStyled>
-      <ProfileContainer>
-      </ProfileContainer>
+      <ProfileContainer />
     </ProfileStyled>
   );
 };

@@ -6,12 +6,14 @@ import { RequestState } from '@/store/reducers/common';
 import { AppDispatch } from '@/store';
 import { createQuiz } from '@/store/actions/quiz';
 import { IPostQuizObject } from '@/interfaces/quiz';
+import { useRouter } from 'next/router';
 import Button from '../common/Button';
 import CheckBox from '../common/CheckBox';
 import Input from '../common/Input';
 import useLanguage from '../hooks/useLanguage';
 import DeleteIcon from '../icons/DeleteIcon';
 import { calculateCorrectAnswers } from '../../utils/calculate';
+import HomeIcon from '../icons/HomeIcon';
 
 interface Question {
   id: number;
@@ -31,6 +33,7 @@ const CreateQuiz: React.FC = () => {
   const [quizName, setQuizName] = React.useState('');
   const quizState = useSelector(selectQuizState);
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const [questions, setQuestions] = React.useState<Question[]>([
     {
       id: 0,
@@ -166,6 +169,9 @@ const CreateQuiz: React.FC = () => {
     <Wrap>
       <Main>
         <TitleBlock>
+          <BackButton onClick={() => router.push('/quizzes')}>
+            <HomeIcon />
+          </BackButton>
           <Title>{commonLn.create_quiz}</Title>
         </TitleBlock>
         <Form>
@@ -243,6 +249,10 @@ const CreateQuiz: React.FC = () => {
   );
 };
 
+const BackButton = styled.div`
+  cursor: pointer;
+`;
+
 const Wrap = styled.section`
   max-width: 640px;
   width: 100%;
@@ -260,7 +270,8 @@ const Main = styled.main`
 
 const TitleBlock = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
 `;
 
 const Label = styled.label`

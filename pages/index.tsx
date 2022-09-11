@@ -1,12 +1,19 @@
 import type { NextPage } from 'next';
-import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 interface Props {}
 
-const Home: NextPage<Props> = () => (
-  <Title>Hello World</Title>
-);
+const Home: NextPage<Props> = () => {
+  const router = useRouter();
 
-const Title = styled.h1``;
+  useEffect(() => {
+    router.push('/quizzes');
+  }, []);
+
+  return (
+    <></>
+  );
+};
 
 export default Home;

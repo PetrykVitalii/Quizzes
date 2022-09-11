@@ -20,6 +20,7 @@ import { IQuiz, IQuizType } from '@/interfaces/quiz';
 
 import useLanguage from '@/components/hooks/useLanguage';
 import useToggle from '@/components/hooks/useToggle';
+import Modal from '@/components/common/Modal';
 
 interface Props {
   initialQuiz: IQuiz,
@@ -33,6 +34,7 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
 
   const [results, setResults] = useState<{ [key: string]: number[] } >({});
   const [isError, setIsError] = useToggle();
+  const [isModal, setIsModal] = useToggle();
 
   const quiz = useSelector(selectQuiz);
   const quizState = useSelector(selectQuizState);
@@ -43,6 +45,10 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
   const handleSetResults = (id: string) => (result: number []) => {
     setResults((previousResult) => ({ ...previousResult, [id]: result }));
   };
+
+  const handleCloseModal = () => {
+    setIsModal(false);
+  }
 
   useEffect(() => {
     if (!quizId) {
@@ -58,7 +64,7 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
     dispatch(getQuiz(quizId));
   }, [quizId]);
 
-  const submit = () => {
+  const submit = async () => {
     if (quiz?.questions.length !== Object.values(results).filter((item) => !!item.length).length) {
       setIsError(true);
       return;
@@ -67,7 +73,9 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
     const mappedResult = Object.entries(results)
       .map(([key, value]) => ({ questionId: +key, answers: value }));
 
-    dispatch(submitQuiz(quiz.id, mappedResult));
+    await dispatch(submitQuiz(quiz.id, mappedResult));
+
+    setIsModal(true);
   };
 
   return (
@@ -108,6 +116,7 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
           </ButtonWrapper>
         </LoadingContainer>
       </QuizContainer>
+      {isModal && <Modal title="Successfully submited!" closeModal={handleCloseModal} />}
     </QuizStyled>
   );
 };

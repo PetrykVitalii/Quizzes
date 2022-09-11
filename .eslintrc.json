@@ -26,6 +26,7 @@
 		"react/react-in-jsx-scope": "off",
 		"react/function-component-definition": "off",
 		"react/jsx-no-useless-fragment": "off",
+		"class-methods-use-this": "off",
 		"import/no-cycle": "off",
 		"react-hooks/exhaustive-deps": "off",
 		"react/require-default-props": ["error", {

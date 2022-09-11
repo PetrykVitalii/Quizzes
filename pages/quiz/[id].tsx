@@ -48,7 +48,6 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
     if (!quizId) {
       return;
     }
-    console.log(123);
 
     if (initialQuiz) {
       dispatch(quizActions.setQuiz(initialQuiz));

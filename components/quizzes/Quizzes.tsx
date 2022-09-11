@@ -1,15 +1,12 @@
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Quizze from '@/components/quizzes/Quizze';
 import Logout from '@/components/quizzes/Logout';
 import LoadingContainer from '@/components/common/LoadingContainer';
 
 import { selectQuizzes, selectQuizzesState } from '@/store/selectors/quizzes';
-import { AppDispatch } from '@/store';
-import { getQuizzes } from '@/store/actions/quizzes';
 import { RequestState } from '@/store/reducers/common';
 
 interface Props {
@@ -20,12 +17,6 @@ const Quizzes: React.FC<Props> = () => {
   const router = useRouter();
   const quizzes = useSelector(selectQuizzes);
   const quizzesLoadingState = useSelector(selectQuizzesState);
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    dispatch(getQuizzes());
-  }, []);
 
   const handleClick = () => {
     router.push('/create-quiz');

@@ -1,14 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+
+import { AppDispatch } from '@/store';
+import { RequestState } from '@/store/reducers/common';
+import { getQuizzes } from '@/store/actions/quizzes';
+import { selectQuizzesState } from '@/store/selectors/quizzes';
+import { logOut } from '@/store/actions/auth';
+
+import LoadingContainer from '@/components/common/LoadingContainer';
 
 interface Props {
   children: React.ReactNode
 }
 
 const ProtectRoute: React.FC<Props> = ({ children }) => {
-  console.log('ProtectRoute');
+  const quizzesLoadingState = useSelector(selectQuizzesState);
+  const router = useRouter();
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (quizzesLoadingState !== RequestState.LOADED) {
+      dispatch(getQuizzes());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (quizzesLoadingState === RequestState.ERROR) {
+      dispatch(logOut());
+      router.push('/auth');
+    }
+  }, [quizzesLoadingState]);
 
   return (
-    <>{ children }</>
+    <LoadingContainer isLoading={quizzesLoadingState !== RequestState.LOADED}>
+      { children }
+    </LoadingContainer>
   );
 };
 

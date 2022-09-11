@@ -7,7 +7,7 @@ interface Props {
   question: IQuestion
 }
 
-const SingleQuiz: React.FC<Props> = ({ question }) => {
+const SingleQuiz: React.FC<Props> = () => {
   console.log('SingleQuiz');
 
   return (

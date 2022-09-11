@@ -1,5 +1,4 @@
-import CreateQuiz from '@/components/me/CreateQuiz';
-import React from 'react';
+import CreateQuiz from '@/components/quizzes/CreateQuiz';
 import styled from 'styled-components';
 
 const createPage: React.FC = () => (

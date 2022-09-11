@@ -28,3 +28,20 @@ export const getQuiz = (quizId: string): AsyncAction => async (
     dispatch(quizActions.setQuizState(RequestState.ERROR));
   }
 };
+
+
+export const createQuiz = (quiz: any): AsyncAction => async (
+  dispatch, 
+  _, 
+  { mainApi }
+) => {
+  try {
+    dispatch(quizActions.setQuizState(RequestState.LOADING));
+
+    await mainApi.sendQuiz(quiz);
+
+    dispatch(quizActions.setQuizState(RequestState.LOADED));
+  } catch (e) {
+    dispatch(quizActions.setQuizState(RequestState.ERROR));
+  }
+}

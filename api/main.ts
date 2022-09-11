@@ -46,4 +46,8 @@ export default class MainApi extends HttpClient {
     return fakeDelay(quiz, 400);
     // return this.instance.get(`/quiz/${quizId}`);
   }
+
+  public sendQuiz(body: any) {
+    return this.instance.post<any>('/quizes', body);
+  }
 }

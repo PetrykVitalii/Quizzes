@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
-import Quizzes from '@/components/me/Quizzes';
+import Quizzes from '@/components/quizzes/Quizzes';
 
 interface Props {}
 
-const Profile: React.FC<Props> = () => (
-  <ProfileStyled>
+const QuizzesPage: React.FC<Props> = () => (
+  <QuizzesPageStyled>
     <Quizzes />
-  </ProfileStyled>
+  </QuizzesPageStyled>
 );
 
-const ProfileStyled = styled.div`
+const QuizzesPageStyled = styled.div`
   display: flex;
   justify-content: center;
   padding: 24px;
@@ -24,4 +24,4 @@ export async function getStaticProps() {
   };
 }
 
-export default Profile;
+export default QuizzesPage;

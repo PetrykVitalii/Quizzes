@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-import Profile from '@/components/me/Profile';
+import Quizze from '@/components/quizzes/Quizze';
+import Logout from '@/components/quizzes/Logout';
 
 interface Props {
 
@@ -41,6 +42,7 @@ const QUIZZES = [
 
 const Quizzes: React.FC<Props> = () => (
   <Wrap>
+    <Logout />
     <Main>
       <TitleBlock>
         <Title>Quizzes</Title>
@@ -48,7 +50,7 @@ const Quizzes: React.FC<Props> = () => (
       </TitleBlock>
       <Profiles>
         {QUIZZES.map((prof) => (
-          <Profile key={prof.id} name={prof.name} />
+          <Quizze key={prof.id} name={prof.name} />
         ))}
       </Profiles>
     </Main>

@@ -23,7 +23,7 @@ export default abstract class HttpClient {
     );
   }
 
-  protected handleSuccessResponse<T>({ data }: AxiosResponse<T>): T {
-    return data;
+  protected handleSuccessResponse<T>({ data }: AxiosResponse<{ data: T }>): T {
+    return data.data;
   }
 }

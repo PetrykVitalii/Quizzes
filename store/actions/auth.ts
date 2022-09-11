@@ -88,5 +88,5 @@ export const refreshTokens = (): AsyncAction => async (
 
 export const logOut = (): AsyncAction => async () => {
   LocalStorage.clearByKey(LOCALS.AccessToken);
-  LocalStorage.setRefreshToken(LOCALS.RefreshToken);
+  LocalStorage.clearByKey(LOCALS.RefreshToken);
 };

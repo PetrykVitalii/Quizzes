@@ -5,11 +5,11 @@ export const isValidPassword = (password: string) => password.length > 4 && pass
 export const numOfQuestions = (questions: string) => questions.length > 0 && questions.length <= 10;
 
 export const numOfCorrectAnswers = (answers: any) => {
-    let count = 0;
-    answers.forEach((answer: any) => {
-        if (answer.isCorrect) {
-        count += 1;
-        }
-    });
-    return count > 0 && count <= 5;
+  let count = 0;
+  answers.forEach((answer: any) => {
+    if (answer.isCorrect) {
+      count += 1;
+    }
+  });
+  return count > 0 && count <= 5;
 };

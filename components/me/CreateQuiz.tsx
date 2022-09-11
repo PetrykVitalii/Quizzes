@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import Button from "../common/Button";
-import CheckBox from "../common/CheckBox";
-import Input from "../common/Input";
-import useLanguage from "../hooks/useLanguage";
-import DeleteIcon from "../icons/DeleteIcon";
-import { calculateCorrectAnswers } from "../../utils/calculate";
-import { useDispatch, useSelector } from "react-redux";
-import { selectQuizState } from "@/store/selectors/quiz";
-import { RequestState } from "@/store/reducers/common";
-import { AppDispatch } from "@/store";
-import { createQuiz } from "@/store/actions/quiz";
+import React from 'react';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectQuizState } from '@/store/selectors/quiz';
+import { RequestState } from '@/store/reducers/common';
+import { AppDispatch } from '@/store';
+import { createQuiz } from '@/store/actions/quiz';
+import Button from '../common/Button';
+import CheckBox from '../common/CheckBox';
+import Input from '../common/Input';
+import useLanguage from '../hooks/useLanguage';
+import DeleteIcon from '../icons/DeleteIcon';
+import { calculateCorrectAnswers } from '../../utils/calculate';
 
 interface Question {
   id: number;
@@ -27,15 +27,15 @@ interface Answer {
 
 const CreateQuiz: React.FC = () => {
   const [{ commonLn }] = useLanguage();
-  const [quizName, setQuizName] = React.useState("");
+  const [quizName, setQuizName] = React.useState('');
   const quizState = useSelector(selectQuizState);
   const dispatch = useDispatch<AppDispatch>();
   const [questions, setQuestions] = React.useState<Question[]>([
     {
       id: 0,
-      text: "",
-      answers: [{ id: 0, text: "", isCorrect: false }],
-      type: "single"
+      text: '',
+      answers: [{ id: 0, text: '', isCorrect: false }],
+      type: 'single',
     },
   ]);
 
@@ -43,9 +43,9 @@ const CreateQuiz: React.FC = () => {
     const lastId = questions[questions.length - 1]?.id || 0;
     const newQuestion: Question = {
       id: lastId + 1,
-      text: "",
-      answers: [{ id: 0, text: "", isCorrect: false }],
-      type: "single"
+      text: '',
+      answers: [{ id: 0, text: '', isCorrect: false }],
+      type: 'single',
     };
     setQuestions([...questions, newQuestion]);
   };
@@ -53,7 +53,7 @@ const CreateQuiz: React.FC = () => {
   const changeAnswerText = (
     questionId: number,
     answerId: number,
-    text: string
+    text: string,
   ) => {
     const newQuestions = questions.map((question) => {
       if (question.id === questionId) {
@@ -75,13 +75,13 @@ const CreateQuiz: React.FC = () => {
       if (question.id === questionId) {
         return {
           ...question,
-          type: question.type === "single" ? "multiple" : "single",
+          type: question.type === 'single' ? 'multiple' : 'single',
         };
       }
       return question;
     });
     setQuestions(newQuestions);
-  }
+  };
 
   const changeQuestionName = (questionId: number, text: string) => {
     const newQuestions = questions.map((question) => {
@@ -92,8 +92,6 @@ const CreateQuiz: React.FC = () => {
     });
     setQuestions(newQuestions);
   };
-
-
 
   const toggleCorrect = (questionId: number, answerId: number) => {
     const newQuestions = questions.map((question) => {
@@ -113,7 +111,7 @@ const CreateQuiz: React.FC = () => {
 
   const deleteQuestion = (questionId: number) => {
     const newQuestions = questions.filter(
-      (question) => question.id !== questionId
+      (question) => question.id !== questionId,
     );
     setQuestions(newQuestions);
   };
@@ -124,7 +122,7 @@ const CreateQuiz: React.FC = () => {
         const lastId = question.answers[question.answers.length - 1]?.id || 0;
         const newAnswer: Answer = {
           id: lastId + 1,
-          text: "",
+          text: '',
           isCorrect: false,
         };
         return { ...question, answers: [...question.answers, newAnswer] };
@@ -138,7 +136,7 @@ const CreateQuiz: React.FC = () => {
     const newQuestions = questions.map((question) => {
       if (question.id === questionId) {
         const newAnswers = question.answers.filter(
-          (answer) => answer.id !== answerId
+          (answer) => answer.id !== answerId,
         );
         return { ...question, answers: newAnswers };
       }
@@ -146,22 +144,22 @@ const CreateQuiz: React.FC = () => {
     });
     setQuestions(newQuestions);
   };
-  
+
   const sendQuiz = () => {
     const quizObject = {
-      "title": quizName,
-      "questions": questions.map((question) => {
-        return {
-          "text": question.text,
-          "type": "single",
-          "answers": question.answers.map((answer) => answer.text),
-          "correctAnswers": question.answers.map((answer, index) => answer.isCorrect ? index : null).filter((item) => item !== null)
-        };
-      })
-    }
+      title: quizName,
+      questions: questions.map((question) => ({
+        text: question.text,
+        type: 'single',
+        answers: question.answers.map((answer) => answer.text),
+        correctAnswers: question.answers
+          .map((answer, index) => (answer.isCorrect ? index : null))
+          .filter((item) => item !== null),
+      })),
+    };
     console.log(quizObject);
     dispatch(createQuiz(quizObject));
-  }
+  };
 
   return (
     <Wrap>
@@ -170,67 +168,66 @@ const CreateQuiz: React.FC = () => {
           <Title>{commonLn.create_quiz}</Title>
         </TitleBlock>
         <Form>
-          <label>{commonLn.question_name}</label>
-          <Input
-            onChange={(e) => setQuizName(e)}
-            value={quizName}
-            type={"text"}
-          />
+          <Label>
+            {commonLn.question_name}
+            <Input
+              onChange={(e) => setQuizName(e)}
+              value={quizName}
+              type="text"
+            />
+          </Label>
           <QuestionsWrap>
-            {questions.map((question, questionId) => {
-              return (
-                <QuestionWrap key={question.id}>
-                  <QuestionTitle>
-                    <label>{commonLn.question_number}{questionId + 1}</label>
+            {questions.map((question, questionId) => (
+              <QuestionWrap key={question.id}>
+                <QuestionTitle>
+                  <Label>
+                    {commonLn.question_number}
+                    {questionId + 1}
+
                     <Input
-                      onChange={(e) =>
-                        changeQuestionName(question.id, e)
-                      }
-                      type={"text"}
+                      onChange={(e) => changeQuestionName(question.id, e)}
+                      type="text"
                       value={question.text}
                     />
-                    <label>multiple</label>
-                    <CheckBox isDisabled={ calculateCorrectAnswers(question.answers) > 1} setIsActive={() => {toggleQuestionType(question.id)}} isActive={question.type === 'multiple'}/>
-                    <IconWrap onClick={() => deleteQuestion(question.id)}>
-                      <DeleteIcon/>
-                    </IconWrap>
-                  </QuestionTitle>
-                  <AnswersWrap>
-                    {commonLn.answers}
-                    {question.answers.map((answer) => {
-                      return (
-                        <AnswerWrap key={answer.id}>
-                          <Input
-                            onChange={(e) =>
-                              changeAnswerText(
-                                question.id,
-                                answer.id,
-                                e
-                              )
-                            }
-                            value={answer.text}
-                            type={"text"}
-                          />
-                          <CheckBox setIsActive={() =>
-                              toggleCorrect(question.id, answer.id)
-                            } isActive={answer.isCorrect} />
-                          <div
-                            onClick={() => deleteAnswer(question.id, answer.id)}
-                          >
-                            <DeleteIcon />
-                          </div>
-                        </AnswerWrap>
-                      );
-                    })}
-                    {
-                      
-                      <AddAnswer onClick={() => addAnswer(question.id)}>
-                      +
-                    </AddAnswer>}
-                  </AnswersWrap>
-                </QuestionWrap>
-              );
-            })}
+                  </Label>
+                  <Label>
+                    multiple
+                    <CheckBox isDisabled={calculateCorrectAnswers(question.answers) > 1} setIsActive={() => { toggleQuestionType(question.id); }} isActive={question.type === 'multiple'} />
+                  </Label>
+                  <IconWrap onClick={() => deleteQuestion(question.id)}>
+                    <DeleteIcon />
+                  </IconWrap>
+                </QuestionTitle>
+                <AnswersWrap>
+                  {commonLn.answers}
+                  {question.answers.map((answer) => (
+                    <AnswerWrap key={answer.id}>
+                      <Input
+                        onChange={(e) => changeAnswerText(
+                          question.id,
+                          answer.id,
+                          e,
+                        )}
+                        value={answer.text}
+                        type="text"
+                      />
+                      <CheckBox
+                        setIsActive={() => toggleCorrect(question.id, answer.id)}
+                        isActive={answer.isCorrect}
+                      />
+                      <div
+                        onClick={() => deleteAnswer(question.id, answer.id)}
+                      >
+                        <DeleteIcon />
+                      </div>
+                    </AnswerWrap>
+                  ))}
+                  <AddAnswer onClick={() => addAnswer(question.id)}>
+                    +
+                  </AddAnswer>
+                </AnswersWrap>
+              </QuestionWrap>
+            ))}
           </QuestionsWrap>
           <Button onClick={addQuestion}>{commonLn.add_question}</Button>
           <Button
@@ -265,6 +262,9 @@ const TitleBlock = styled.div`
   justify-content: space-between;
 `;
 
+const Label = styled.label`
+`;
+
 const Title = styled.h1`
   font-size: 20px;
   font-weight: 500;
@@ -276,10 +276,10 @@ const QuestionsWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-`
+`;
 
 const IconWrap = styled.div`
-  `
+  `;
 
 const QuestionWrap = styled.div`
   border: ${({ theme }) => `1px solid ${theme.colors.BorderGrey}`};
@@ -296,7 +296,7 @@ const AnswersWrap = styled.div`
   flex-direction: column;
   gap: 8px;
   width: 100%;
-`
+`;
 
 const AnswerWrap = styled.div`
   display: flex;

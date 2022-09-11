@@ -1,12 +1,12 @@
-import CreateQuiz from "@/components/me/CreateQuiz";
-import React from "react";
-import styled from "styled-components";
+import CreateQuiz from '@/components/me/CreateQuiz';
+import React from 'react';
+import styled from 'styled-components';
 
-const createPage: React.FC = () => {
-  return <FormStyled>
+const createPage: React.FC = () => (
+  <FormStyled>
     <CreateQuiz />
-  </FormStyled>;
-};
+  </FormStyled>
+);
 
 const FormStyled = styled.div`
   display: flex;

@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import CheckBoxOffIcon from "@/components/icons/CheckBoxOffIcon";
-import CheckBoxOnIcon from "@/components/icons/CheckBoxOnIcon";
-import CheckBoxDisabled from "../icons/CheckBoxDisabled";
+import CheckBoxOffIcon from '@/components/icons/CheckBoxOffIcon';
+import CheckBoxOnIcon from '@/components/icons/CheckBoxOnIcon';
+import CheckBoxDisabled from '../icons/CheckBoxDisabled';
 
 interface Props {
   isActive: boolean;
@@ -20,7 +20,7 @@ const CheckBox: React.FC<Props> = ({ isActive, setIsActive, isDisabled }) => {
     <Container onClick={handleSetIsActive}>
       {isDisabled ? (
         <DisabledCheckBoxWrapper>
-          <CheckBoxDisabled/>
+          <CheckBoxDisabled />
         </DisabledCheckBoxWrapper>
       ) : (
         <>
@@ -39,7 +39,7 @@ const CheckBox: React.FC<Props> = ({ isActive, setIsActive, isDisabled }) => {
 const CheckBoxWrapper = styled.div<{ isActive: boolean }>`
   width: 100%;
   height: 100%;
-  display: ${({ isActive }) => (isActive ? "flex" : "none")};
+  display: ${({ isActive }) => (isActive ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
 `;
@@ -51,7 +51,7 @@ const DisabledCheckBoxWrapper = styled.div`
   cursor: not-allowed;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const Container = styled.div`
   width: 20px;

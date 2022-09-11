@@ -48,7 +48,7 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
 
   const handleCloseModal = () => {
     setIsModal(false);
-  }
+  };
 
   useEffect(() => {
     if (!quizId) {

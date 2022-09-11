@@ -2,7 +2,7 @@
 import { encode } from '@/utils/api';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-export default abstract class HttpClient {
+export default abstract class HttpAuthClient {
   protected readonly instance: AxiosInstance;
 
   public constructor(baseURL: string) {
@@ -10,7 +10,7 @@ export default abstract class HttpClient {
       baseURL,
       transformRequest: [(data) => encode(data)],
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/plain',
       },
     });
 

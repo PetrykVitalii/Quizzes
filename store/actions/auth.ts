@@ -25,7 +25,7 @@ export const signIn = (body: ISignIn): AsyncAction => async (
   try {
     dispatch(authActions.setSignInState(RequestState.LOADING));
 
-    const { access_token: accessToken, refresh_token: refreshToken } = await mainApi.signIn(body);
+    const { accessToken, refreshToken } = await mainApi.signIn(body);
 
     LocalStorage.setAccessToken(accessToken);
     LocalStorage.setRefreshToken(refreshToken);
@@ -45,7 +45,7 @@ export const signUp = (body: ISignUp): AsyncAction => async (
   try {
     dispatch(authActions.setSignUpState(RequestState.LOADING));
 
-    const { access_token: accessToken, refresh_token: refreshToken } = await mainApi.signUp(body);
+    const { accessToken, refreshToken } = await mainApi.signUp(body);
 
     LocalStorage.setAccessToken(accessToken);
     LocalStorage.setRefreshToken(refreshToken);
@@ -72,9 +72,9 @@ export const refreshTokens = (): AsyncAction => async (
     }
 
     const {
-      access_token: accessToken,
-      refresh_token: refreshToken,
-    } = await mainApi.refreshTokens({ refresh_token: storedRefreshToken });
+      accessToken,
+      refreshToken,
+    } = await mainApi.refreshTokens({ refreshToken: storedRefreshToken });
 
     LocalStorage.setAccessToken(accessToken);
     LocalStorage.setRefreshToken(refreshToken);

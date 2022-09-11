@@ -31,6 +31,18 @@ export default class Common extends AbstractLanguage {
     });
   }
 
+  get choose_answer() {
+    return this.getText({
+      EN: 'Choose answer',
+    });
+  }
+
+  get submit_my_answer() {
+    return this.getText({
+      EN: 'Submit My Answer',
+    });
+  }
+
   get next() {
     return this.getText({
       EN: 'Next',
@@ -52,6 +64,36 @@ export default class Common extends AbstractLanguage {
   get confirm_password_error_msg() {
     return this.getText({
       EN: 'Passwords not match',
+    });
+  }
+
+  get create_quiz() {
+    return this.getText({
+      EN: 'Create Quiz',
+    });
+  }
+
+  get question_number() {
+    return this.getText({
+      EN: 'Question №',
+    });
+  }
+
+  get question_name() {
+    return this.getText({
+      EN: 'Question Name',
+    });
+  }
+
+  get answers() {
+    return this.getText({
+      EN: 'Answers',
+    });
+  }
+
+  get add_question() {
+    return this.getText({
+      EN: 'Add question',
     });
   }
 }

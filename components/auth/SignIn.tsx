@@ -42,12 +42,16 @@ const SignIn: NextPage<Props> = () => {
     }
 
     const signInBody: ISignIn = {
-      username: userName,
+      login: userName,
       password,
     };
 
-    await dispatch(signIn(signInBody));
-    router.push('me');
+    try {
+      await dispatch(signIn(signInBody));
+      router.push('quizzes');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const isUserNameError = useMemo(() => !isValidUserName(userName), [userName]);

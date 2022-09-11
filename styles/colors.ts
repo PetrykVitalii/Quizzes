@@ -6,6 +6,7 @@ export interface IColors {
   BorderGrey: string;
   GreyLight: string;
   ItemBg: string;
+  Border: string;
   Blue: string;
 }
 
@@ -17,5 +18,6 @@ export const colors: IColors = {
   BorderGrey: '#e0e1e2',
   GreyLight: '#F0F0F0',
   ItemBg: '#FBFBFB',
+  Border: '#E8E8E8',
   Blue: '#1890ff',
 };

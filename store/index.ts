@@ -9,14 +9,17 @@ import S3Api from '@/api/s3';
 
 import { LanguageActions } from '@/store/actions/language';
 import { AuthActions } from '@/store/actions/auth';
+import { QuizActions } from '@/store/actions/quiz';
 import { QuizzesActions } from '@/store/actions/quizzes';
 
 import languageReducer from '@/store/reducers/language';
 import authReducer from '@/store/reducers/auth';
+import quizReducer from '@/store/reducers/quiz';
 import quizzesReducer from '@/store/reducers/quizzes';
 
 const rootReducer = combineReducers({
   languageReducer,
+  quizReducer,
   authReducer,
   quizzesReducer,
 });
@@ -42,6 +45,7 @@ const enhancer = composeEnhancers(
 export type State = ReturnType<typeof rootReducer>;
 export type Actions =
   | AuthActions
+  | QuizActions
   | QuizzesActions
   | LanguageActions;
 

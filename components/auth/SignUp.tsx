@@ -36,19 +36,23 @@ const SignUp: NextPage<Props> = () => {
 
   const signUpState = useSelector(selectSignUpState);
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     if (isUserNameError || isPasswordError || isConfirmPasswordError) {
       setIsError(true);
       return;
     }
 
     const signUpBody: ISignUp = {
-      username: userName,
+      login: userName,
       password,
     };
 
-    dispatch(signUp(signUpBody));
-    router.push('me');
+    try {
+      await dispatch(signUp(signUpBody));
+      router.push('quizzes');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const isUserNameError = useMemo(() => !isValidUserName(userName), [userName]);

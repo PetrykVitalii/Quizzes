@@ -20,16 +20,19 @@
 		"jsx-a11y/anchor-is-valid": "off",
 		"react/prop-types": "off",
 		"import/no-named-as-default": "off",
-		"no-console" : "warn",
 		"react/no-array-index-key": "off",
 		"react/jsx-props-no-spreading": "off",
 		"react/react-in-jsx-scope": "off",
 		"react/function-component-definition": "off",
 		"react/jsx-no-useless-fragment": "off",
+		"class-methods-use-this": "off",
 		"import/no-cycle": "off",
 		"react-hooks/exhaustive-deps": "off",
 		"react/require-default-props": ["error", {
 			"ignoreFunctionalComponents": true
+		}],
+		"no-console": ["warn", {
+			"allow": ["error", "warn", "info"]
 		}]
 	}
 }

@@ -14,6 +14,8 @@ import useLanguage from '../hooks/useLanguage';
 import DeleteIcon from '../icons/DeleteIcon';
 import { calculateCorrectAnswers } from '../../utils/calculate';
 import HomeIcon from '../icons/HomeIcon';
+import { getQuizzes } from '@/store/actions/quizzes';
+import { selectQuizzesState } from '@/store/selectors/quizzes';
 
 interface Question {
   id: number;
@@ -32,6 +34,7 @@ const CreateQuiz: React.FC = () => {
   const [{ commonLn }] = useLanguage();
   const [quizName, setQuizName] = React.useState('');
   const quizState = useSelector(selectQuizState);
+  const quizzesState = useSelector(selectQuizzesState);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [questions, setQuestions] = React.useState<Question[]>([
@@ -154,7 +157,7 @@ const CreateQuiz: React.FC = () => {
       title: quizName,
       questions: questions.map((question) => ({
         title: question.text,
-        type: 'single',
+        type: question.type,
         answers: question.answers.map((answer) => answer.text),
         correctAnswers: question.answers
           .map((answer, index) => (answer.isCorrect ? index : null)!)
@@ -162,6 +165,8 @@ const CreateQuiz: React.FC = () => {
       })),
     };
     await dispatch(createQuiz(quizObject));
+    await dispatch(getQuizzes());
+
     router.push('/quizzes');
   };
 
@@ -244,7 +249,10 @@ const CreateQuiz: React.FC = () => {
           </BtnBox>
           <BtnBox>
             <Button
-              isLoading={quizState === RequestState.LOADING}
+              isLoading={
+                quizState === RequestState.LOADING 
+                || quizzesState === RequestState.LOADING
+              }
               onClick={sendQuiz}
             >
               {commonLn.create_quiz}

@@ -3,6 +3,9 @@ export interface IColors {
   Main: string;
   Second: string;
   Error: string;
+  BorderGrey: string;
+  GreyLight: string;
+  ItemBg: string;
 }
 
 export const colors: IColors = {
@@ -10,4 +13,7 @@ export const colors: IColors = {
   Main: '#f0f1f2',
   Second: '#ffffff',
   Error: '#FF474D',
+  BorderGrey: '#e0e1e2',
+  GreyLight: '#F0F0F0',
+  ItemBg: '#FBFBFB',
 };

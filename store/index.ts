@@ -11,15 +11,18 @@ import MainAuthApi from '@/api/main-auth';
 import { LanguageActions } from '@/store/actions/language';
 import { AuthActions } from '@/store/actions/auth';
 import { QuizActions } from '@/store/actions/quiz';
+import { QuizzesActions } from '@/store/actions/quizzes';
 
 import languageReducer from '@/store/reducers/language';
 import authReducer from '@/store/reducers/auth';
 import quizReducer from '@/store/reducers/quiz';
+import quizzesReducer from '@/store/reducers/quizzes';
 
 const rootReducer = combineReducers({
   languageReducer,
   quizReducer,
   authReducer,
+  quizzesReducer,
 });
 
 const composeEnhancers = (typeof window === 'undefined' || !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ? compose : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
@@ -46,6 +49,7 @@ export type State = ReturnType<typeof rootReducer>;
 export type Actions =
   | AuthActions
   | QuizActions
+  | QuizzesActions
   | LanguageActions;
 
 export const store = createStore(rootReducer, enhancer);

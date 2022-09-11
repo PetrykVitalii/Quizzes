@@ -9,30 +9,46 @@ interface Props {
   isActive: boolean;
   setIsActive: (isActive: boolean) => void;
   isDisabled?: boolean;
+  isMultiple?: boolean;
 }
 
-const CheckBox: React.FC<Props> = ({ isActive, setIsActive, isDisabled }) => {
+const CheckBox: React.FC<Props> = ({
+  isActive, setIsActive, isDisabled, isMultiple = false,
+}) => {
   const handleSetIsActive = () => {
     setIsActive(!isActive);
   };
 
   return (
-    <Container onClick={handleSetIsActive}>
-      {isDisabled ? (
-        <DisabledCheckBoxWrapper>
-          <CheckBoxDisabled />
-        </DisabledCheckBoxWrapper>
-      ) : (
-        <>
-          <CheckBoxWrapper isActive={isActive}>
-            <CheckBoxOnIcon />
-          </CheckBoxWrapper>
-          <CheckBoxWrapper isActive={!isActive}>
-            <CheckBoxOffIcon />
-          </CheckBoxWrapper>
-        </>
-      )}
-    </Container>
+    <>
+      {!isMultiple ? (
+        <Container onClick={handleSetIsActive}>
+
+          {isDisabled ? (
+            <DisabledCheckBoxWrapper>
+              <CheckBoxDisabled />
+            </DisabledCheckBoxWrapper>
+          ) : (
+            <>
+              <CheckBoxWrapper isActive={isActive}>
+                <CheckBoxOnIcon />
+              </CheckBoxWrapper>
+              <CheckBoxWrapper isActive={!isActive}>
+                <CheckBoxOffIcon />
+              </CheckBoxWrapper>
+            </>
+          )}
+        </Container>
+      )
+        : (
+          <MultContainer>
+            <CheckBoxWrapper isActive>
+              <CheckBoxOnIcon />
+            </CheckBoxWrapper>
+          </MultContainer>
+        )}
+    </>
+
   );
 };
 
@@ -57,6 +73,11 @@ const Container = styled.div`
   width: 20px;
   height: 20px;
   cursor: pointer;
+`;
+
+const MultContainer = styled.div`
+  width: 20px;
+  height: 20px;
 `;
 
 export default CheckBox;

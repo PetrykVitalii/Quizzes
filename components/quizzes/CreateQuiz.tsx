@@ -155,14 +155,18 @@ const CreateQuiz: React.FC = () => {
   const sendQuiz = async () => {
     const quizObject: IPostQuizObject = {
       title: quizName,
-      questions: questions.map((question) => ({
-        title: question.text,
-        type: question.type,
-        answers: question.answers.map((answer) => answer.text),
-        correctAnswers: question.answers
-          .map((answer, index) => (answer.isCorrect ? index : null)!)
-          .filter((item) => item !== null),
-      })),
+      questions: questions.map((question) => {
+        const isMult = question.answers.filter((answer) => answer.isCorrect).length > 1;
+
+        return {
+          title: question.text,
+          type: isMult ? 'multiple' : 'single',
+          answers: question.answers.map((answer) => answer.text),
+          correctAnswers: question.answers
+            .map((answer, index) => (answer.isCorrect ? index : null)!)
+            .filter((item) => item !== null),
+        };
+      }),
     };
     await dispatch(createQuiz(quizObject));
     await dispatch(getQuizzes());
@@ -207,7 +211,12 @@ const CreateQuiz: React.FC = () => {
                     <Text>
                       multiple
                     </Text>
-                    <CheckBox isDisabled={calculateCorrectAnswers(question.answers) > 1} setIsActive={() => { toggleQuestionType(question.id); }} isActive={question.type === 'multiple'} />
+                    <CheckBox
+                      isMultiple={calculateCorrectAnswers(question.answers) > 1}
+                      // isDisabled={calculateCorrectAnswers(question.answers) > 1}
+                      setIsActive={() => { toggleQuestionType(question.id); }}
+                      isActive={question.type === 'multiple'}
+                    />
                   </Label>
                   <IconWrap onClick={() => deleteQuestion(question.id)}>
                     <DeleteIcon />

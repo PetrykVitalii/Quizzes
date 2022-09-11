@@ -1,34 +1,19 @@
-import React from 'react';
 import styled from 'styled-components';
+
+import Me from '@/components/me/Me';
 
 interface Props {}
 
-const Profile: React.FC<Props> = () => {
-  console.log('me');
-
-  return (
-    <ProfileStyled>
-      <ProfileContainer />
-    </ProfileStyled>
-  );
-};
-
-const ProfileContainer = styled.div`
-  max-width: 800px;
-  width: 100%;
-  padding: 24px 40px;
-  border-radius: 16px;
-  background-color: ${({ theme }) => theme.colors.Second};
-  border: ${({ theme }) => `1px solid ${theme.colors.Main}`};
-  position: relative;
-`;
+const Profile: React.FC<Props> = () => (
+  <ProfileStyled>
+    <Me />
+  </ProfileStyled>
+);
 
 const ProfileStyled = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
   padding: 24px;
-  flex: 1;
 `;
 
 export async function getStaticProps() {

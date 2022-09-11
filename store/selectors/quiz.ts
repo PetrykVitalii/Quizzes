@@ -15,3 +15,8 @@ export const selectQuizState: Selector<State, RequestState> = createSelector(
   selectQuizReducer,
   ({ quizState }) => quizState,
 );
+
+export const selectSubmitQuizState: Selector<State, RequestState> = createSelector(
+  selectQuizReducer,
+  ({ submitQuizState }) => submitQuizState,
+);

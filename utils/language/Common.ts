@@ -31,6 +31,18 @@ export default class Common extends AbstractLanguage {
     });
   }
 
+  get choose_answer() {
+    return this.getText({
+      EN: 'Choose answer',
+    });
+  }
+
+  get submit_my_answer() {
+    return this.getText({
+      EN: 'Submit My Answer',
+    });
+  }
+
   get next() {
     return this.getText({
       EN: 'Next',

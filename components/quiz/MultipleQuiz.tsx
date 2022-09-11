@@ -8,9 +8,10 @@ import { IQuestion } from '@/interfaces/quiz';
 interface Props {
   question: IQuestion;
   setResult: (value: number[]) => void;
+  errorMsg?: string,
 }
 
-const MultipleQuiz: React.FC<Props> = ({ question, setResult }) => {
+const MultipleQuiz: React.FC<Props> = ({ question, setResult, errorMsg = '' }) => {
   const [rightResults, setRightResults] = useState<{ [key: number]: boolean } >({});
 
   const handleSetRightResults = (index: number) => (isActive: boolean) => {
@@ -37,22 +38,31 @@ const MultipleQuiz: React.FC<Props> = ({ question, setResult }) => {
           </Answer>
         ))}
       </Answers>
+      {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
     </MultipleQuizStyled>
   );
 };
+
+const ErrorMsg = styled.div`
+  color: ${({ theme }) => theme.colors.Error};
+`;
 
 const AnswerText = styled.div`
 `;
 
 const Answer = styled.div`
   display: flex;
-  align-items: center;
+  column-gap: 12px;
 `;
 
 const Answers = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
 `;
 
 const Title = styled.h3`
+  margin-bottom: 4px;
 `;
 
 const MultipleQuizStyled = styled.div`

@@ -7,11 +7,13 @@ import { IQuiz } from '@/interfaces/quiz';
 export interface QuizState {
   quiz: IQuiz | null,
   quizState: RequestState,
+  submitQuizState: RequestState,
 }
 
 const initialState: QuizState = {
   quiz: null,
   quizState: RequestState.IDLE,
+  submitQuizState: RequestState.IDLE,
 };
 
 export class QuizReducer extends ImmerReducer<QuizState> {
@@ -21,6 +23,10 @@ export class QuizReducer extends ImmerReducer<QuizState> {
 
   setQuizState(quizState: RequestState) {
     this.draftState.quizState = quizState;
+  }
+
+  setSubmitQuizState(submitQuizState: RequestState) {
+    this.draftState.submitQuizState = submitQuizState;
   }
 }
 

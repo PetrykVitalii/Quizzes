@@ -1,5 +1,6 @@
 import HttpClient from '@/api/http-client';
 
+import { IQuizze } from '@/interfaces/quizzesApi';
 import { IQuiz, IQuizType, ISubmitQuiz } from '@/interfaces/quiz';
 
 import { fakeDelay } from '@/utils/fakeAPI';
@@ -7,6 +8,10 @@ import { fakeDelay } from '@/utils/fakeAPI';
 export default class MainApi extends HttpClient {
   public constructor() {
     super(process.env.API_URL);
+  }
+
+  public getQuizzes() {
+    return this.instance.get<{ quizes: IQuizze[] }>('/my-quizes');
   }
 
   public submitQuiz(quizId: string, body: ISubmitQuiz) {

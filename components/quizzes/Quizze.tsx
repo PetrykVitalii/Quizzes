@@ -7,7 +7,7 @@ interface Props {
   name: string
 }
 
-const Profile: React.FC<Props> = ({ name }) => (
+const Quizze: React.FC<Props> = ({ name }) => (
   <Wrap>
     <Round>
       <ProfileIcon />
@@ -57,4 +57,4 @@ const LinkTo = styled.div`
   padding: 0 10px;
 `;
 
-export default Profile;
+export default Quizze;

@@ -1,17 +1,18 @@
 export interface IQuiz {
   id: string,
-  name: string,
+  title: string,
   questions: IQuestion[]
 }
 export interface IQuestion {
   id: string,
-  name: string,
+  text: string,
   type: IQuizType,
   answers: string[],
 }
 
 export interface ISubmitQuiz {
-  [key: string]: number[]
+  questionId: number,
+  answers: number[],
 }
 
 export enum IQuizType {

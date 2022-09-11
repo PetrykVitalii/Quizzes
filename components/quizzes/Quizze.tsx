@@ -5,10 +5,11 @@ import ArrowIcon from '@/components/icons/ArrowIcon';
 
 interface Props {
   name: string
+  onClick: () => void
 }
 
-const Quizze: React.FC<Props> = ({ name }) => (
-  <Wrap>
+const Quizze: React.FC<Props> = ({ name, onClick }) => (
+  <Wrap onClick={onClick}>
     <Round>
       <ProfileIcon />
     </Round>

@@ -29,7 +29,7 @@ const SingleQuiz: React.FC<Props> = ({ question, setResult, errorMsg }) => {
 
   return (
     <SingleQuizStyled>
-      <Title>{question.name}</Title>
+      <Title>{question.text}</Title>
       <Answers>
         {question.answers.map((answer, i) => (
           <Answer key={i}>

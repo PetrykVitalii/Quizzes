@@ -1,10 +1,13 @@
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Quizze from '@/components/quizzes/Quizze';
 import Logout from '@/components/quizzes/Logout';
-import { useSelector, useDispatch } from 'react-redux';
+import LoadingContainer from '@/components/common/LoadingContainer';
+
 import { selectQuizzes, selectQuizzesState } from '@/store/selectors/quizzes';
-import { useEffect } from 'react';
 import { AppDispatch } from '@/store';
 import { getQuizzes } from '@/store/actions/quizzes';
 import { RequestState } from '@/store/reducers/common';
@@ -14,32 +17,39 @@ interface Props {
 }
 
 const Quizzes: React.FC<Props> = () => {
+  const router = useRouter();
   const quizzes = useSelector(selectQuizzes);
   const quizzesLoadingState = useSelector(selectQuizzesState);
 
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (quizzes.length > 0 || quizzesLoadingState === RequestState.LOADED) return;
+    dispatch(getQuizzes());
+  }, []);
 
-    dispatch(getQuizzes);
-  }, [quizzes]);
+  const handleClick = () => {
+    router.push('/create-quiz');
+  };
+
+  const handleQuizClick = (code: string) => () => {
+    router.push(`/quiz/${code}`);
+  };
 
   return (
     <Wrap>
       <Logout />
       <Main>
-        <TitleBlock>
-          <Title>Quizzes</Title>
-          <AddBtn>Add Quizzes</AddBtn>
-        </TitleBlock>
-        <Profiles>
-          {quizzesLoadingState !== RequestState.LOADING
-            ? <Title>Loading</Title>
-            : quizzes.map((prof) => (
-              <Quizze key={prof?.id} name={prof?.name} />
+        <LoadingContainer isLoading={quizzesLoadingState !== RequestState.LOADED}>
+          <TitleBlock>
+            <Title>Quizzes</Title>
+            <AddBtn onClick={handleClick}>Add Quizzes</AddBtn>
+          </TitleBlock>
+          <Profiles>
+            {quizzes.map((q) => (
+              <Quizze key={q.id} name={q.title} onClick={handleQuizClick(q.code)} />
             ))}
-        </Profiles>
+          </Profiles>
+        </LoadingContainer>
       </Main>
     </Wrap>
   );

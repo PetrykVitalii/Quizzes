@@ -149,7 +149,7 @@ const CreateQuiz: React.FC = () => {
     setQuestions(newQuestions);
   };
 
-  const sendQuiz = () => {
+  const sendQuiz = async () => {
     const quizObject: IPostQuizObject = {
       title: quizName,
       questions: questions.map((question) => ({
@@ -161,8 +161,8 @@ const CreateQuiz: React.FC = () => {
           .filter((item) => item !== null),
       })),
     };
-    console.log(quizObject);
-    dispatch(createQuiz(quizObject));
+    await dispatch(createQuiz(quizObject));
+    router.push('/quizzes');
   };
 
   return (

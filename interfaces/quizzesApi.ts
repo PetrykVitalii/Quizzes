@@ -1,4 +1,5 @@
 export interface IQuizze {
-  name: any,
-  id: number,
+  code: string
+  id: number
+  title: string
 }

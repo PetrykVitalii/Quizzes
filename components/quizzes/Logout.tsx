@@ -17,7 +17,7 @@ const Logout: React.FC<Props> = () => {
 
   return (
     <Wrap>
-      <Link href="/login">
+      <Link href="/auth">
         <Text onClick={handleLogout}>Logout</Text>
       </Link>
     </Wrap>

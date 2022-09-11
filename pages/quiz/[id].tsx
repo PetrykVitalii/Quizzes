@@ -45,9 +45,10 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
   };
 
   useEffect(() => {
-    if (quizState === RequestState.LOADED) {
+    if (!quizId) {
       return;
     }
+    console.log(123);
 
     if (initialQuiz) {
       dispatch(quizActions.setQuiz(initialQuiz));
@@ -56,7 +57,7 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
     }
 
     dispatch(getQuiz(quizId));
-  }, []);
+  }, [quizId]);
 
   const submit = () => {
     if (quiz?.questions.length !== Object.values(results).filter((item) => !!item.length).length) {
@@ -64,14 +65,17 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
       return;
     }
 
-    dispatch(submitQuiz(quizId, results));
+    const mappedResult = Object.entries(results)
+      .map(([key, value]) => ({ questionId: +key, answers: value }));
+
+    dispatch(submitQuiz(quiz.id, mappedResult));
   };
 
   return (
     <QuizStyled>
       <QuizContainer>
-        <LoadingContainer isLoading={quizState !== RequestState.LOADED}>
-          <QuizTitle>{quiz?.name}</QuizTitle>
+        <LoadingContainer isLoading={quizState !== RequestState.LOADED && !initialQuiz}>
+          <QuizTitle>{quiz?.title}</QuizTitle>
           <Quizzes>
             {quiz?.questions.map((question) => {
               switch (question.type) {

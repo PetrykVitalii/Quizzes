@@ -13,19 +13,18 @@ export type QuizzesActions =
 export const getQuizzes = (): AsyncAction => async (
   dispatch,
   _,
-  { mainApi },
+  { mainProtectedApi },
 ) => {
   try {
     dispatch(quizzesActions.setQuizzesState(RequestState.LOADING));
 
     // quizes - named according to endpoint
-    const { quizes } = await mainApi.getQuizzes();
+    const quizes = await mainProtectedApi.getQuizzes();
 
     dispatch(quizzesActions.setQuizzes(quizes));
 
     dispatch(quizzesActions.setQuizzesState(RequestState.LOADED));
   } catch (e) {
     dispatch(quizzesActions.setQuizzesState(RequestState.ERROR));
-    throw new Error();
   }
 };

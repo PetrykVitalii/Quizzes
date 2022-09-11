@@ -5,9 +5,7 @@ import { QuizReducer } from '@/store/reducers/quiz';
 import { RequestState } from '@/store/reducers/common';
 import { AsyncAction } from '@/store/actions/common';
 
-import { ISubmitQuiz } from '@/interfaces/quiz';
-
-import { fakeDelay } from '@/utils/fakeAPI';
+import { IPostQuizObject, ISubmitQuiz } from '@/interfaces/quiz';
 
 export const quizActions = createActionCreators(QuizReducer);
 
@@ -34,7 +32,7 @@ export const getQuiz = (quizId: string): AsyncAction => async (
   }
 };
 
-export const createQuiz = (quiz: any): AsyncAction => async (
+export const createQuiz = (quiz: IPostQuizObject): AsyncAction => async (
   dispatch,
   _,
   { mainProtectedApi },
@@ -49,15 +47,13 @@ export const createQuiz = (quiz: any): AsyncAction => async (
     dispatch(quizActions.setQuizState(RequestState.ERROR));
   }
 };
-export const submitQuiz = (quizId: string, body: ISubmitQuiz): AsyncAction => async (
+export const submitQuiz = (quizId: string, body: ISubmitQuiz[]): AsyncAction => async (
   dispatch,
   _,
   { mainApi },
 ) => {
   try {
     dispatch(quizActions.setSubmitQuizState(RequestState.LOADING));
-    await fakeDelay([], 1000);
-    console.log(body, 'body');
 
     await mainApi.submitQuiz(quizId, body);
 

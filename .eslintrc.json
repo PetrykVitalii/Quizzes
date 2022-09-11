@@ -31,7 +31,7 @@
 		"react/require-default-props": ["error", {
 			"ignoreFunctionalComponents": true
 		}],
-		"no-console": ["error", {
+		"no-console": ["warning", {
 			"allow": ["error", "warn", "info"]
 		}]
 	}

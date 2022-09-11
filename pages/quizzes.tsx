@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-import Me from '@/components/me/Me';
+import Quizzes from '@/components/me/Quizzes';
 
 interface Props {}
 
 const Profile: React.FC<Props> = () => (
   <ProfileStyled>
-    <Me />
+    <Quizzes />
   </ProfileStyled>
 );
 

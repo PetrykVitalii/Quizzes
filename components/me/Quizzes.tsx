@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 
 import Profile from '@/components/me/Profile';
-import HomeIcon from '@/components/icons/HomeIcon';
 
 interface Props {
 
 }
 
-const PROFILES = [
+const QUIZZES = [
   { id: 1, name: 'Alefs Company' },
   { id: 2, name: 'Bdk Auditors' },
   { id: 3, name: 'Company for final test' },
@@ -40,19 +39,15 @@ const PROFILES = [
   { id: 55, name: 'E-Fin Services' },
 ];
 
-const Me: React.FC<Props> = () => (
+const Quizzes: React.FC<Props> = () => (
   <Wrap>
-    <ProfileHeader>
-      <HomeIcon />
-      <UserEmail>user@gmail.com</UserEmail>
-    </ProfileHeader>
     <Main>
       <TitleBlock>
         <Title>Quizzes</Title>
         <AddBtn>Add Quizzes</AddBtn>
       </TitleBlock>
       <Profiles>
-        {PROFILES.map((prof) => (
+        {QUIZZES.map((prof) => (
           <Profile key={prof.id} name={prof.name} />
         ))}
       </Profiles>
@@ -68,22 +63,11 @@ const Wrap = styled.section`
   border: ${({ theme }) => `1px solid ${theme.colors.Main}`};
 `;
 
-const ProfileHeader = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0 24px 4px;
-`;
-
 const Main = styled.main`
   border: ${({ theme }) => `1px solid ${theme.colors.BorderGrey}`};
   padding: 38px 24px 24px 24px;
   border-radius: 2px;
   background: ${({ theme }) => theme.colors.Second};
-`;
-
-const UserEmail = styled.p`
-  font-size: 10px;
-  padding: 10px;
 `;
 
 const TitleBlock = styled.div`
@@ -115,4 +99,4 @@ const AddBtn = styled.button`
   cursor: pointer;
 `;
 
-export default Me;
+export default Quizzes;

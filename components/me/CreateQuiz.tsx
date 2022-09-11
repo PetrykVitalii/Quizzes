@@ -148,7 +148,7 @@ const CreateQuiz: React.FC = () => {
   };
   
   const sendQuiz = () => {
-    const finalObj = {
+    const quizObject = {
       "title": quizName,
       "questions": questions.map((question) => {
         return {
@@ -159,8 +159,8 @@ const CreateQuiz: React.FC = () => {
         };
       })
     }
-    console.log(finalObj);
-    dispatch(createQuiz(finalObj));
+    console.log(quizObject);
+    dispatch(createQuiz(quizObject));
   }
 
   return (
@@ -222,9 +222,11 @@ const CreateQuiz: React.FC = () => {
                         </AnswerWrap>
                       );
                     })}
-                    <AddAnswer onClick={() => addAnswer(question.id)}>
+                    {
+                      
+                      <AddAnswer onClick={() => addAnswer(question.id)}>
                       +
-                    </AddAnswer>
+                    </AddAnswer>}
                   </AnswersWrap>
                 </QuestionWrap>
               );

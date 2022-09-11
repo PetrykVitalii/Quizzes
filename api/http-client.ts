@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-import { encode } from '@/utils/api';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 export default abstract class HttpClient {
@@ -8,7 +7,6 @@ export default abstract class HttpClient {
   public constructor(baseURL: string) {
     this.instance = axios.create({
       baseURL,
-      transformRequest: [(data) => encode(data)],
       headers: {
         'Content-Type': 'text/plain',
       },

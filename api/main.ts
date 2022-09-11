@@ -4,6 +4,7 @@ import {
   IAuthResponse, ISignIn, ISignUp, IUser,
 } from '@/interfaces/authApi';
 import { IQuiz, IQuizType, ISubmitQuiz } from '@/interfaces/quiz';
+import { encode } from '@/utils/api';
 
 import { fakeDelay } from '@/utils/fakeAPI';
 
@@ -13,11 +14,11 @@ export default class MainApi extends HttpClient {
   }
 
   public signIn(body: ISignIn) {
-    return this.instance.post<IAuthResponse>('/auth', body);
+    return this.instance.post<IAuthResponse>('/auth', encode(body));
   }
 
   public signUp(body: ISignUp) {
-    return this.instance.post<IAuthResponse>('/register', body);
+    return this.instance.post<IAuthResponse>('/register', encode(body));
   }
 
   public getMe() {

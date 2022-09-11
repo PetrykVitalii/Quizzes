@@ -75,7 +75,7 @@ export default class Common extends AbstractLanguage {
 
   get question_number() {
     return this.getText({
-      EN: 'Question №',
+      EN: 'Question #',
     });
   }
 

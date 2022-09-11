@@ -176,7 +176,7 @@ const CreateQuiz: React.FC = () => {
         </TitleBlock>
         <Form>
           <Label>
-            {commonLn.question_name}
+            <Text>{commonLn.question_name}</Text>
             <Input
               onChange={(e) => setQuizName(e)}
               value={quizName}
@@ -188,9 +188,10 @@ const CreateQuiz: React.FC = () => {
               <QuestionWrap key={question.id}>
                 <QuestionTitle>
                   <Label>
-                    {commonLn.question_number}
-                    {questionId + 1}
-
+                    <Text>
+                      {commonLn.question_number}
+                      {questionId + 1}
+                    </Text>
                     <Input
                       onChange={(e) => changeQuestionName(question.id, e)}
                       type="text"
@@ -198,7 +199,9 @@ const CreateQuiz: React.FC = () => {
                     />
                   </Label>
                   <Label>
-                    multiple
+                    <Text>
+                      multiple
+                    </Text>
                     <CheckBox isDisabled={calculateCorrectAnswers(question.answers) > 1} setIsActive={() => { toggleQuestionType(question.id); }} isActive={question.type === 'multiple'} />
                   </Label>
                   <IconWrap onClick={() => deleteQuestion(question.id)}>
@@ -222,11 +225,11 @@ const CreateQuiz: React.FC = () => {
                         setIsActive={() => toggleCorrect(question.id, answer.id)}
                         isActive={answer.isCorrect}
                       />
-                      <div
+                      <IconWrap
                         onClick={() => deleteAnswer(question.id, answer.id)}
                       >
                         <DeleteIcon />
-                      </div>
+                      </IconWrap>
                     </AnswerWrap>
                   ))}
                   <AddAnswer onClick={() => addAnswer(question.id)}>
@@ -236,13 +239,17 @@ const CreateQuiz: React.FC = () => {
               </QuestionWrap>
             ))}
           </QuestionsWrap>
-          <Button onClick={addQuestion}>{commonLn.add_question}</Button>
-          <Button
-            isLoading={quizState === RequestState.LOADING}
-            onClick={sendQuiz}
-          >
-            {commonLn.create_quiz}
-          </Button>
+          <BtnBox>
+            <Button onClick={addQuestion}>{commonLn.add_question}</Button>
+          </BtnBox>
+          <BtnBox>
+            <Button
+              isLoading={quizState === RequestState.LOADING}
+              onClick={sendQuiz}
+            >
+              {commonLn.create_quiz}
+            </Button>
+          </BtnBox>
         </Form>
       </Main>
     </Wrap>
@@ -275,6 +282,10 @@ const TitleBlock = styled.div`
 `;
 
 const Label = styled.label`
+  margin: 15px 0;
+`;
+const Text = styled.p`
+  margin: 8px 0;
 `;
 
 const Title = styled.h1`
@@ -288,13 +299,18 @@ const QuestionsWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding: 10px 0;
 `;
 
 const IconWrap = styled.div`
+  & svg {
+    cursor: pointer;
+  }
   `;
 
 const QuestionWrap = styled.div`
   border: ${({ theme }) => `1px solid ${theme.colors.BorderGrey}`};
+  padding: 10px;
 `;
 
 const QuestionTitle = styled.div`
@@ -319,9 +335,30 @@ const AnswerWrap = styled.div`
 
 const AddAnswer = styled.button`
   padding: 8px 24px;
+  cursor: pointer;
 `;
 
-const Form = styled.div``;
+const Form = styled.div`
+`;
+
+const BtnBox = styled.div`
+  display: flex;
+  width: 140px;
+  margin: 20px 0;
+  
+
+  & button {
+    flex: 0 0 100%;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    & button {
+      background: ${({ theme }) => theme.colors.Border};
+    }
+  }
+`;
 
 export async function getStaticProps() {
   return {

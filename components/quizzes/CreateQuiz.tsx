@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { getQuizzes } from '@/store/actions/quizzes';
+import { selectQuizzesState } from '@/store/selectors/quizzes';
 import { selectQuizState } from '@/store/selectors/quiz';
 import { RequestState } from '@/store/reducers/common';
 import { AppDispatch } from '@/store';
@@ -14,8 +16,6 @@ import useLanguage from '../hooks/useLanguage';
 import DeleteIcon from '../icons/DeleteIcon';
 import { calculateCorrectAnswers } from '../../utils/calculate';
 import HomeIcon from '../icons/HomeIcon';
-import { getQuizzes } from '@/store/actions/quizzes';
-import { selectQuizzesState } from '@/store/selectors/quizzes';
 
 interface Question {
   id: number;
@@ -250,7 +250,7 @@ const CreateQuiz: React.FC = () => {
           <BtnBox>
             <Button
               isLoading={
-                quizState === RequestState.LOADING 
+                quizState === RequestState.LOADING
                 || quizzesState === RequestState.LOADING
               }
               onClick={sendQuiz}

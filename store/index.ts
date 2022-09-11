@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import MainApi from '@/api/main';
 import MainProtected from '@/api/main-protected';
 import S3Api from '@/api/s3';
+import MainAuthApi from '@/api/main-auth';
 
 import { LanguageActions } from '@/store/actions/language';
 import { AuthActions } from '@/store/actions/auth';
@@ -27,12 +28,14 @@ const rootReducer = combineReducers({
 const composeEnhancers = (typeof window === 'undefined' || !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ? compose : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
 const mainApi = new MainApi();
+const mainAuthApi = new MainAuthApi();
 const mainProtectedApi = new MainProtected();
 const s3Api = new S3Api();
 
 export const getApiArguments = () => ({
   mainApi,
   mainProtectedApi,
+  mainAuthApi,
   s3Api,
 });
 

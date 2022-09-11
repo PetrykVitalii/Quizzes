@@ -1,14 +1,16 @@
 /* eslint-disable class-methods-use-this */
+import { encode } from '@/utils/api';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-export default abstract class HttpClient {
+export default abstract class HttpAuthClient {
   protected readonly instance: AxiosInstance;
 
   public constructor(baseURL: string) {
     this.instance = axios.create({
       baseURL,
+      transformRequest: [(data) => encode(data)],
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/plain',
       },
     });
 

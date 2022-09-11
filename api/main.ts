@@ -13,7 +13,7 @@ export default class MainApi extends HttpClient {
   }
 
   public signIn(body: ISignIn) {
-    return this.instance.post<IAuthResponse>('/login', body);
+    return this.instance.post<IAuthResponse>('/auth', body);
   }
 
   public signUp(body: ISignUp) {

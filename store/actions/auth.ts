@@ -32,7 +32,6 @@ export const getMe = (): AsyncAction => async (
     dispatch(authActions.setUserState(RequestState.LOADED));
   } catch (e) {
     dispatch(authActions.setUserState(RequestState.ERROR));
-    throw new Error();
   }
 };
 

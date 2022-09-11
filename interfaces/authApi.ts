@@ -1,10 +1,10 @@
 export interface ISignIn {
-  username: string,
+  login: string,
   password: string,
 }
 
 export interface ISignUp {
-  username: string,
+  login: string,
   password: string,
 }
 

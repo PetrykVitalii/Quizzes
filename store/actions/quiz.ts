@@ -34,6 +34,21 @@ export const getQuiz = (quizId: string): AsyncAction => async (
   }
 };
 
+export const createQuiz = (quiz: any): AsyncAction => async (
+  dispatch,
+  _,
+  { mainProtectedApi },
+) => {
+  try {
+    dispatch(quizActions.setQuizState(RequestState.LOADING));
+
+    await mainProtectedApi.sendQuiz(quiz);
+
+    dispatch(quizActions.setQuizState(RequestState.LOADED));
+  } catch (e) {
+    dispatch(quizActions.setQuizState(RequestState.ERROR));
+  }
+};
 export const submitQuiz = (quizId: string, body: ISubmitQuiz): AsyncAction => async (
   dispatch,
   _,

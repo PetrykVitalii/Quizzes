@@ -66,4 +66,34 @@ export default class Common extends AbstractLanguage {
       EN: 'Passwords not match',
     });
   }
+
+  get create_quiz() {
+    return this.getText({
+      EN: 'Create Quiz',
+    });
+  }
+
+  get question_number() {
+    return this.getText({
+      EN: 'Question №',
+    });
+  }
+
+  get question_name() {
+    return this.getText({
+      EN: 'Question Name',
+    });
+  }
+
+  get answers() {
+    return this.getText({
+      EN: 'Answers',
+    });
+  }
+
+  get add_question() {
+    return this.getText({
+      EN: 'Add question',
+    });
+  }
 }

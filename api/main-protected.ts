@@ -5,4 +5,8 @@ export default class MainProtected extends HttpClientProtected {
   public constructor() {
     super(process.env.API_URL);
   }
+
+  public sendQuiz(body: any) {
+    return this.instance.post<any>('/quizes', body);
+  }
 }

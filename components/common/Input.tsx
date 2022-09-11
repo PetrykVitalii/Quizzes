@@ -56,6 +56,7 @@ const InputStyled = styled.label`
   border-radius: 6px;
   width: 100%;
   position: relative;
+  display: block;
 `;
 
 export default Input;

@@ -19,6 +19,7 @@ import { AppDispatch } from '@/store';
 import { IQuiz, IQuizType } from '@/interfaces/quiz';
 
 import useLanguage from '@/components/hooks/useLanguage';
+import useToggle from '@/components/hooks/useToggle';
 
 interface Props {
   initialQuiz: IQuiz,
@@ -31,7 +32,7 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [results, setResults] = useState<{ [key: string]: number[] } >({});
-  console.log(results, 'results');
+  const [isError, setIsError] = useToggle();
 
   const quiz = useSelector(selectQuiz);
   const quizState = useSelector(selectQuizState);
@@ -58,6 +59,11 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
   }, []);
 
   const submit = () => {
+    if (quiz?.questions.length !== Object.values(results).filter((item) => !!item.length).length) {
+      setIsError(true);
+      return;
+    }
+
     dispatch(submitQuiz(quizId, results));
   };
 
@@ -75,6 +81,7 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
                       setResult={handleSetResults(question.id)}
                       key={question.id}
                       question={question}
+                      errorMsg={(isError && !results[question.id]?.length) ? commonLn.choose_answer : ''}
                     />
                   );
                 case IQuizType.Single:
@@ -83,6 +90,7 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
                       setResult={handleSetResults(question.id)}
                       key={question.id}
                       question={question}
+                      errorMsg={(isError && !results[question.id]?.length) ? commonLn.choose_answer : ''}
                     />
                   );
                 default:

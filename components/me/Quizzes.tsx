@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import Profile from '@/components/me/Profile';
+import { useRouter } from 'next/router';
 
 interface Props {
 
@@ -39,21 +40,29 @@ const QUIZZES = [
   { id: 55, name: 'E-Fin Services' },
 ];
 
-const Quizzes: React.FC<Props> = () => (
-  <Wrap>
-    <Main>
-      <TitleBlock>
-        <Title>Quizzes</Title>
-        <AddBtn>Add Quizzes</AddBtn>
-      </TitleBlock>
-      <Profiles>
-        {QUIZZES.map((prof) => (
-          <Profile key={prof.id} name={prof.name} />
-        ))}
-      </Profiles>
-    </Main>
-  </Wrap>
-);
+const Quizzes: React.FC<Props> = () => {
+  const router = useRouter();
+
+  const handleAddQuiz = () => {
+    router.push('/create-quiz');
+  };
+
+  return (
+    <Wrap>
+      <Main>
+        <TitleBlock>
+          <Title>Quizzes</Title>
+          <AddBtn onClick={handleAddQuiz}>Add Quizzes</AddBtn>
+        </TitleBlock>
+        <Profiles>
+          {QUIZZES.map((prof) => (
+            <Profile key={prof.id} name={prof.name} />
+          ))}
+        </Profiles>
+      </Main>
+    </Wrap>
+  );
+};
 
 const Wrap = styled.section`
   max-width: 640px;

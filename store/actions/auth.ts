@@ -17,33 +17,15 @@ export type AuthActions =
   | ReturnType<typeof authActions.setUser>
   | ReturnType<typeof authActions.setRefreshTokenState>;
 
-export const getMe = (): AsyncAction => async (
-  dispatch,
-  _,
-  { mainApi },
-) => {
-  try {
-    dispatch(authActions.setUserState(RequestState.LOADING));
-
-    const user = await mainApi.getMe();
-
-    dispatch(authActions.setUser(user));
-
-    dispatch(authActions.setUserState(RequestState.LOADED));
-  } catch (e) {
-    dispatch(authActions.setUserState(RequestState.ERROR));
-  }
-};
-
 export const signIn = (body: ISignIn): AsyncAction => async (
   dispatch,
   _,
-  { mainApi },
+  { mainAuthApi },
 ) => {
   try {
     dispatch(authActions.setSignInState(RequestState.LOADING));
 
-    const { accessToken, refreshToken } = await mainApi.signIn(body);
+    const { accessToken, refreshToken } = await mainAuthApi.signIn(body);
 
     LocalStorage.setAccessToken(accessToken);
     LocalStorage.setRefreshToken(refreshToken);
@@ -58,12 +40,12 @@ export const signIn = (body: ISignIn): AsyncAction => async (
 export const signUp = (body: ISignUp): AsyncAction => async (
   dispatch,
   _,
-  { mainApi },
+  { mainAuthApi },
 ) => {
   try {
     dispatch(authActions.setSignUpState(RequestState.LOADING));
 
-    const { accessToken, refreshToken } = await mainApi.signUp(body);
+    const { accessToken, refreshToken } = await mainAuthApi.signUp(body);
 
     LocalStorage.setAccessToken(accessToken);
     LocalStorage.setRefreshToken(refreshToken);
@@ -78,7 +60,7 @@ export const signUp = (body: ISignUp): AsyncAction => async (
 export const refreshTokens = (): AsyncAction => async (
   dispatch,
   _,
-  { mainApi },
+  { mainAuthApi },
 ) => {
   try {
     await dispatch(authActions.setRefreshTokenState(RequestState.LOADING));
@@ -92,7 +74,7 @@ export const refreshTokens = (): AsyncAction => async (
     const {
       accessToken,
       refreshToken,
-    } = await mainApi.refreshTokens({ refreshToken: storedRefreshToken });
+    } = await mainAuthApi.refreshTokens({ refreshToken: storedRefreshToken });
 
     LocalStorage.setAccessToken(accessToken);
     LocalStorage.setRefreshToken(refreshToken);

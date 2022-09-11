@@ -1,7 +1,6 @@
 import HttpClient from '@/api/http-client';
 
 import { IQuiz, IQuizType, ISubmitQuiz } from '@/interfaces/quiz';
-import { encode } from '@/utils/api';
 
 import { fakeDelay } from '@/utils/fakeAPI';
 

@@ -5,6 +5,7 @@ import { selectQuizState } from '@/store/selectors/quiz';
 import { RequestState } from '@/store/reducers/common';
 import { AppDispatch } from '@/store';
 import { createQuiz } from '@/store/actions/quiz';
+import { IPostQuizObject } from '@/interfaces/quiz';
 import Button from '../common/Button';
 import CheckBox from '../common/CheckBox';
 import Input from '../common/Input';
@@ -146,14 +147,14 @@ const CreateQuiz: React.FC = () => {
   };
 
   const sendQuiz = () => {
-    const quizObject = {
+    const quizObject: IPostQuizObject = {
       title: quizName,
       questions: questions.map((question) => ({
-        text: question.text,
+        title: question.text,
         type: 'single',
         answers: question.answers.map((answer) => answer.text),
         correctAnswers: question.answers
-          .map((answer, index) => (answer.isCorrect ? index : null))
+          .map((answer, index) => (answer.isCorrect ? index : null)!)
           .filter((item) => item !== null),
       })),
     };

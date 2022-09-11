@@ -18,3 +18,13 @@ export enum IQuizType {
   Multiple = 'multiple',
   Single = 'single',
 }
+
+export interface IPostQuizObject {
+  title: string,
+  questions: {
+    title: string,
+    type: string,
+    answers: string[],
+    correctAnswers: number[]
+  }[]
+}

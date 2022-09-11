@@ -3,11 +3,15 @@ export interface IQuiz {
   name: string,
   questions: IQuestion[]
 }
-
 export interface IQuestion {
+  id: string,
   name: string,
   type: IQuizType,
   answers: string[],
+}
+
+export interface ISubmitQuiz {
+  [key: string]: number[]
 }
 
 export enum IQuizType {

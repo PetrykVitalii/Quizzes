@@ -9,8 +9,8 @@ export interface ISignUp {
 }
 
 export interface IAuthResponse {
-  access_token: string,
-  refresh_token: string,
+  accessToken: string,
+  refreshToken: string,
 }
 
 export interface IUser {

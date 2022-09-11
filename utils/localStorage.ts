@@ -1,6 +1,6 @@
 export enum LOCALS {
-  AccessToken = 'access_token',
-  RefreshToken = 'refresh_token',
+  AccessToken = 'accessToken',
+  RefreshToken = 'refreshToken',
 }
 
 export default class LocalStorage {

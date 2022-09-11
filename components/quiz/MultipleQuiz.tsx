@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+
+import CheckBox from '@/components/common/CheckBox';
 
 import { IQuestion } from '@/interfaces/quiz';
 
 interface Props {
-  question: IQuestion
+  question: IQuestion;
+  setResult: (value: number[]) => void;
 }
 
-const MultipleQuiz: React.FC<Props> = ({ question }) => {
-  console.log('MultipleQuiz');
+const MultipleQuiz: React.FC<Props> = ({ question, setResult }) => {
+  const [rightResults, setRightResults] = useState<{ [key: number]: boolean } >({});
+
+  const handleSetRightResults = (index: number) => (isActive: boolean) => {
+    setRightResults((previousResult) => {
+      const newResult = { ...previousResult, [index]: isActive };
+
+      const answers = Object.entries(newResult)
+        .filter(([, value]) => !!value)
+        .map(([key]) => +key);
+
+      setResult(answers);
+      return newResult;
+    });
+  };
 
   return (
     <MultipleQuizStyled>
@@ -16,6 +32,7 @@ const MultipleQuiz: React.FC<Props> = ({ question }) => {
       <Answers>
         {question.answers.map((answer, i) => (
           <Answer key={i}>
+            <CheckBox setIsActive={handleSetRightResults(i)} isActive={!!rightResults[i]} />
             <AnswerText>{answer}</AnswerText>
           </Answer>
         ))}

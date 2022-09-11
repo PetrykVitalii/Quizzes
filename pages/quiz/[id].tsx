@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
 
 import MainApi from '@/api/main';
 
-import { IQuiz, IQuizType } from '@/interfaces/quiz';
-import { useSelector, useDispatch } from 'react-redux';
+import LoadingContainer from '@/components/common/LoadingContainer';
+import MultipleQuiz from '@/components/quiz/MultipleQuiz';
+import SingleQuiz from '@/components/quiz/SingleQuiz';
+
 import { selectQuiz, selectQuizState } from '@/store/selectors/quiz';
 import { RequestState } from '@/store/reducers/common';
 import { getQuiz, quizActions } from '@/store/actions/quiz';
 import { AppDispatch } from '@/store';
-import { useRouter } from 'next/router';
-import LoadingContainer from '@/components/common/LoadingContainer';
-import MultipleQuiz from '@/components/quiz/MultipleQuiz';
-import SingleQuiz from '@/components/quiz/SingleQuiz';
+
+import { IQuiz, IQuizType } from '@/interfaces/quiz';
 
 interface Props {
   initialQuiz: IQuiz,
@@ -21,6 +23,8 @@ interface Props {
 
 const Quiz: React.FC<Props> = ({ initialQuiz }) => {
   const router = useRouter();
+  const [results, setResults] = useState<{ [key: string]: number[] } >({});
+  console.log(results, 'results');
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -29,7 +33,9 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
 
   const quizId = (router.query as { id: string }).id;
 
-  console.log(quiz, 'quiz');
+  const handleSetResults = (index: number) => (result: number []) => {
+    setResults((previousResult) => ({ ...previousResult, [index]: result }));
+  };
 
   useEffect(() => {
     if (quizState === RequestState.LOADED) {
@@ -53,7 +59,7 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
           {quiz?.questions.map((question, i) => {
             switch (question.type) {
               case IQuizType.Multiple:
-                return <MultipleQuiz key={i} question={question} />;
+                return <MultipleQuiz setResult={handleSetResults(i)} key={i} question={question} />;
               case IQuizType.Single:
                 return <SingleQuiz key={i} question={question} />;
               default:

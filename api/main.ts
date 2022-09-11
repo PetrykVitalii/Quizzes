@@ -3,6 +3,7 @@ import HttpClient from '@/api/http-client';
 import {
   IAuthResponse, ISignIn, ISignUp, IUser,
 } from '@/interfaces/authApi';
+import { IQuizze } from '@/interfaces/quizzesApi';
 
 export default class MainApi extends HttpClient {
   public constructor() {
@@ -19,6 +20,10 @@ export default class MainApi extends HttpClient {
 
   public getMe() {
     return this.instance.get<IUser>('/get_me');
+  }
+
+  public getQuizzes() {
+    return this.instance.get<{ quizes: IQuizze[] }>('/my-quizes');
   }
 
   public refreshTokens(body: { refresh_token: string }) {

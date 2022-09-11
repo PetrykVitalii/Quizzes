@@ -17,25 +17,6 @@ export type AuthActions =
   | ReturnType<typeof authActions.setUser>
   | ReturnType<typeof authActions.setRefreshTokenState>;
 
-export const getMe = (): AsyncAction => async (
-  dispatch,
-  _,
-  { mainApi },
-) => {
-  try {
-    dispatch(authActions.setUserState(RequestState.LOADING));
-
-    const user = await mainApi.getMe();
-
-    dispatch(authActions.setUser(user));
-
-    dispatch(authActions.setUserState(RequestState.LOADED));
-  } catch (e) {
-    dispatch(authActions.setUserState(RequestState.ERROR));
-    throw new Error();
-  }
-};
-
 export const signIn = (body: ISignIn): AsyncAction => async (
   dispatch,
   _,

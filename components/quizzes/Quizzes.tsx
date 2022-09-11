@@ -2,60 +2,48 @@ import styled from 'styled-components';
 
 import Quizze from '@/components/quizzes/Quizze';
 import Logout from '@/components/quizzes/Logout';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectQuizzes, selectQuizzesState } from '@/store/selectors/quizzes';
+import { useEffect } from 'react';
+import { AppDispatch } from '@/store';
+import { getQuizzes } from '@/store/actions/quizzes';
+import { RequestState } from '@/store/reducers/common';
 
 interface Props {
 
 }
 
-const QUIZZES = [
-  { id: 1, name: 'Alefs Company' },
-  { id: 2, name: 'Bdk Auditors' },
-  { id: 3, name: 'Company for final test' },
-  { id: 4, name: 'Company of Juan' },
-  { id: 5, name: 'E-Fin Services' },
-  { id: 11, name: 'Alefs Company' },
-  { id: 21, name: 'Bdk Auditors' },
-  { id: 31, name: 'Company for final test' },
-  { id: 41, name: 'Company of Juan' },
-  { id: 51, name: 'E-Fin Services' },
-  { id: 12, name: 'Alefs Company' },
-  { id: 22, name: 'Bdk Auditors' },
-  { id: 32, name: 'Company for final test' },
-  { id: 42, name: 'Company of Juan' },
-  { id: 52, name: 'E-Fin Services' },
-  { id: 13, name: 'Alefs Company' },
-  { id: 23, name: 'Bdk Auditors' },
-  { id: 33, name: 'Company for final test' },
-  { id: 43, name: 'Company of Juan' },
-  { id: 53, name: 'E-Fin Services' },
-  { id: 14, name: 'Alefs Company' },
-  { id: 24, name: 'Bdk Auditors' },
-  { id: 34, name: 'Company for final test' },
-  { id: 44, name: 'Company of Juan' },
-  { id: 54, name: 'E-Fin Services' },
-  { id: 15, name: 'Alefs Company' },
-  { id: 25, name: 'Bdk Auditors' },
-  { id: 35, name: 'Company for final test' },
-  { id: 45, name: 'Company of Juan' },
-  { id: 55, name: 'E-Fin Services' },
-];
+const Quizzes: React.FC<Props> = () => {
+  const quizzes = useSelector(selectQuizzes);
+  const quizzesLoadingState = useSelector(selectQuizzesState);
 
-const Quizzes: React.FC<Props> = () => (
-  <Wrap>
-    <Logout />
-    <Main>
-      <TitleBlock>
-        <Title>Quizzes</Title>
-        <AddBtn>Add Quizzes</AddBtn>
-      </TitleBlock>
-      <Profiles>
-        {QUIZZES.map((prof) => (
-          <Quizze key={prof.id} name={prof.name} />
-        ))}
-      </Profiles>
-    </Main>
-  </Wrap>
-);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (quizzes.length > 0 || quizzesLoadingState === RequestState.LOADED) return;
+
+    dispatch(getQuizzes);
+  }, [quizzes]);
+
+  return (
+    <Wrap>
+      <Logout />
+      <Main>
+        <TitleBlock>
+          <Title>Quizzes</Title>
+          <AddBtn>Add Quizzes</AddBtn>
+        </TitleBlock>
+        <Profiles>
+          {quizzesLoadingState !== RequestState.LOADING
+            ? <Title>Loading</Title>
+            : quizzes.map((prof) => (
+              <Quizze key={prof?.id} name={prof?.name} />
+            ))}
+        </Profiles>
+      </Main>
+    </Wrap>
+  );
+};
 
 const Wrap = styled.section`
   max-width: 640px;

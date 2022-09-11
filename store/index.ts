@@ -9,13 +9,16 @@ import S3Api from '@/api/s3';
 
 import { LanguageActions } from '@/store/actions/language';
 import { AuthActions } from '@/store/actions/auth';
+import { QuizzesActions } from '@/store/actions/quizzes';
 
 import languageReducer from '@/store/reducers/language';
 import authReducer from '@/store/reducers/auth';
+import quizzesReducer from '@/store/reducers/quizzes';
 
 const rootReducer = combineReducers({
   languageReducer,
   authReducer,
+  quizzesReducer,
 });
 
 const composeEnhancers = (typeof window === 'undefined' || !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ? compose : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
@@ -39,6 +42,7 @@ const enhancer = composeEnhancers(
 export type State = ReturnType<typeof rootReducer>;
 export type Actions =
   | AuthActions
+  | QuizzesActions
   | LanguageActions;
 
 export const store = createStore(rootReducer, enhancer);

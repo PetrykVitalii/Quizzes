@@ -46,13 +46,17 @@ const AnswerText = styled.div`
 
 const Answer = styled.div`
   display: flex;
-  align-items: center;
+  column-gap: 12px;
 `;
 
 const Answers = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
 `;
 
 const Title = styled.h3`
+  margin-bottom: 4px;
 `;
 
 const MultipleQuizStyled = styled.div`

@@ -9,13 +9,16 @@ import MainApi from '@/api/main';
 import LoadingContainer from '@/components/common/LoadingContainer';
 import MultipleQuiz from '@/components/quiz/MultipleQuiz';
 import SingleQuiz from '@/components/quiz/SingleQuiz';
+import Button from '@/components/common/Button';
 
-import { selectQuiz, selectQuizState } from '@/store/selectors/quiz';
+import { selectQuiz, selectQuizState, selectSubmitQuizState } from '@/store/selectors/quiz';
 import { RequestState } from '@/store/reducers/common';
-import { getQuiz, quizActions } from '@/store/actions/quiz';
+import { getQuiz, quizActions, submitQuiz } from '@/store/actions/quiz';
 import { AppDispatch } from '@/store';
 
 import { IQuiz, IQuizType } from '@/interfaces/quiz';
+
+import useLanguage from '@/components/hooks/useLanguage';
 
 interface Props {
   initialQuiz: IQuiz,
@@ -23,18 +26,21 @@ interface Props {
 
 const Quiz: React.FC<Props> = ({ initialQuiz }) => {
   const router = useRouter();
-  const [results, setResults] = useState<{ [key: string]: number[] } >({});
-  console.log(results, 'results');
+  const [{ commonLn }] = useLanguage();
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const [results, setResults] = useState<{ [key: string]: number[] } >({});
+  console.log(results, 'results');
+
   const quiz = useSelector(selectQuiz);
   const quizState = useSelector(selectQuizState);
+  const submitQuizState = useSelector(selectSubmitQuizState);
 
   const quizId = (router.query as { id: string }).id;
 
-  const handleSetResults = (index: number) => (result: number []) => {
-    setResults((previousResult) => ({ ...previousResult, [index]: result }));
+  const handleSetResults = (id: string) => (result: number []) => {
+    setResults((previousResult) => ({ ...previousResult, [id]: result }));
   };
 
   useEffect(() => {
@@ -51,28 +57,62 @@ const Quiz: React.FC<Props> = ({ initialQuiz }) => {
     dispatch(getQuiz(quizId));
   }, []);
 
+  const submit = () => {
+    dispatch(submitQuiz(quizId, results));
+  };
+
   return (
     <QuizStyled>
       <QuizContainer>
         <LoadingContainer isLoading={quizState !== RequestState.LOADED}>
           <QuizTitle>{quiz?.name}</QuizTitle>
-          {quiz?.questions.map((question, i) => {
-            switch (question.type) {
-              case IQuizType.Multiple:
-                return <MultipleQuiz setResult={handleSetResults(i)} key={i} question={question} />;
-              case IQuizType.Single:
-                return <SingleQuiz key={i} question={question} />;
-              default:
-                return <></>;
-            }
-          })}
+          <Quizzes>
+            {quiz?.questions.map((question) => {
+              switch (question.type) {
+                case IQuizType.Multiple:
+                  return (
+                    <MultipleQuiz
+                      setResult={handleSetResults(question.id)}
+                      key={question.id}
+                      question={question}
+                    />
+                  );
+                case IQuizType.Single:
+                  return (
+                    <SingleQuiz
+                      setResult={handleSetResults(question.id)}
+                      key={question.id}
+                      question={question}
+                    />
+                  );
+                default:
+                  return <></>;
+              }
+            })}
+          </Quizzes>
+          <ButtonWrapper>
+            <Button onClick={submit} isLoading={submitQuizState === RequestState.LOADING}>
+              {commonLn.submit_my_answer}
+            </Button>
+          </ButtonWrapper>
         </LoadingContainer>
       </QuizContainer>
     </QuizStyled>
   );
 };
 
+const ButtonWrapper = styled.div`
+  margin-top: 20px;
+`;
+
+const Quizzes = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+`;
+
 const QuizTitle = styled.h2`
+  margin-bottom: 16px;
 `;
 
 const QuizContainer = styled.div`
